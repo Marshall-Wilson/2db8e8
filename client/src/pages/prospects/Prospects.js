@@ -11,7 +11,7 @@ const Prospects = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(DEFAULT_NUM_ROWS_PER_PAGE);
   const [count, setCount] = useState(0);
-
+  // TODO: state for checkboxes
   const handleChangeRowsPerPage = (event, _) => {
     setRowsPerPage(event.target.value);
     setCurrentPage(0);
@@ -20,6 +20,10 @@ const Prospects = () => {
   const handleChangePage = (_, index) => {
     setCurrentPage(index);
   };
+
+  // TODO: set up handler for individual checkbox click
+  // TODO: set up handler for page checkbox click 
+  // TODO: set up handler for "add to campaign" click 
 
   useEffect(() => {
     const fetchProspects = async () => {
@@ -56,6 +60,8 @@ const Prospects = () => {
           />
         }
       />
+      {/* TODO: Include modal/dialog for adding prospects. 
+      Create new component for loading campaign options */}
     </>
   );
 };

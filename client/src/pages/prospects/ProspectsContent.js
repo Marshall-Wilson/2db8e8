@@ -15,7 +15,8 @@ const Content = ({
   handleChangePage,
   handleChangeRowsPerPage,
 }) => {
-  const rowData = paginatedData.map((row) => [
+  const rowData = paginatedData.map((row) => [ 
+    // TODO: add data for checkbox. maybe just: row.checkbox,
     row.email,
     row.first_name,
     row.last_name,
@@ -30,21 +31,23 @@ const Content = ({
           <CircularProgress />
         </Grid>
       ) : (
-        <PaginatedTable
+        <PaginatedTable  
+          // TODO: add prop for "xx of xxx selected" and "add to campaign". possibly just boolean toggle
           paginatedData={paginatedData}
           handleChangePage={handleChangePage}
           handleChangeRowsPerPage={handleChangeRowsPerPage}
           count={count}
           page={page}
           rowsPerPage={rowsPerPage}
-          headerColumns={[
+          headerColumns={[ 
+            // TODO: column header with checkbox for checking/unchecking page
             "Email",
             "First Name",
             "Last Name",
             "Created",
             "Updated",
           ]}
-          rowData={rowData}
+          rowData={rowData} 
         />
       )}
     </>
