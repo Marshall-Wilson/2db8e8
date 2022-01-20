@@ -11,7 +11,9 @@ const Prospects = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(DEFAULT_NUM_ROWS_PER_PAGE);
   const [count, setCount] = useState(0);
-  // TODO: state for checkboxes
+  const [selected, setSelected] = useState({}); // object or array?
+
+
   const handleChangeRowsPerPage = (event, _) => {
     setRowsPerPage(event.target.value);
     setCurrentPage(0);
@@ -21,8 +23,18 @@ const Prospects = () => {
     setCurrentPage(index);
   };
 
-  // TODO: set up handler for individual checkbox click
-  // TODO: set up handler for page checkbox click 
+  const handleCheckboxClick = (e, id) => {
+    setSelected(oldSelected => ({...oldSelected, [id]: !oldSelected[id]}));
+  }
+
+  const handleSelectAll = (e) => {
+    let newSelected = {...selected};
+    prospectsData.map(row => {
+      newSelected[row.id] = e.target.checked;
+    })
+    setSelected(newSelected);
+  }
+
   // TODO: set up handler for "add to campaign" click 
 
   useEffect(() => {
@@ -57,6 +69,9 @@ const Prospects = () => {
             rowsPerPage={rowsPerPage}
             handleChangePage={handleChangePage}
             handleChangeRowsPerPage={handleChangeRowsPerPage}
+            selected={selected}
+            handleCheckboxClick={handleCheckboxClick}
+            handleSelectAll={handleSelectAll}
           />
         }
       />

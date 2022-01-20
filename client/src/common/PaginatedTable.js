@@ -109,9 +109,6 @@ export default function CustomPaginatedTable({
   return (
     <React.Fragment>
       <div className={flexRootEnd}> 
-        {/* TODO: add "xx of xxx" and add to campaign button here on table. 
-          Make sure not to affect other uses of this component.
-          Likely requires new prop to toggle display */}
         <TablePagination
           rowsPerPageOptions={NUM_ROWS_PER_PAGE_CHOICES}
           colSpan={3}
