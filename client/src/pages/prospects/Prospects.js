@@ -4,6 +4,7 @@ import Drawer from "common/Drawer";
 import ProspectsContent from "./ProspectsContent";
 import axios from "axios";
 import { DEFAULT_NUM_ROWS_PER_PAGE } from "../../constants/table";
+import AddProspectsDialog from "./AddProspectsDialog.js"
 
 const Prospects = () => {
   const [prospectsData, setProspectsData] = useState([]);
@@ -13,6 +14,7 @@ const Prospects = () => {
   const [count, setCount] = useState(0);
   const [selected, setSelected] = useState({});
   const [numSelected, setNumSelected] = useState(0);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleChangeRowsPerPage = (event, _) => {
     setRowsPerPage(event.target.value);
@@ -42,7 +44,13 @@ const Prospects = () => {
     updateNumSelected(newSelected);
   }
 
-  // TODO: set up handler for "add to campaign" click 
+  const handleDialogOpen = () => {
+    setDialogOpen(true);
+  }
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+  }
 
   useEffect(() => {
     const fetchProspects = async () => {
@@ -80,11 +88,15 @@ const Prospects = () => {
             numSelected={numSelected}
             handleCheckboxClick={handleCheckboxClick}
             handleSelectAll={handleSelectAll}
+            handleOpenDialog={handleDialogOpen}
           />
         }
       />
-      {/* TODO: Include modal/dialog for adding prospects. 
-      Create new component for loading campaign options */}
+      <AddProspectsDialog
+        open={dialogOpen}
+        onClose={handleDialogClose}
+        selected={selected}
+      />
     </>
   );
 };

@@ -20,7 +20,8 @@ const Content = ({
   selected,
   numSelected,
   handleCheckboxClick,
-  handleSelectAll
+  handleSelectAll,
+  handleOpenDialog
 }) => {
   const { checkboxInfoRoot } = useTableStyles();
 
@@ -44,7 +45,7 @@ const Content = ({
   const checkboxInfo = (
     <div className={checkboxInfoRoot}>
       <p>{numSelected} of {count} selected</p>
-      <Button variant="outlined">Add to Campaign</Button> {/* TODO: Add functionality for button */}
+      <Button variant="outlined" onClick={handleOpenDialog}>Add to Campaign</Button> {/* TODO: Add functionality for button */}
     </div>
   )
 
