@@ -18,18 +18,18 @@ const AddProspectsDialog = ({
                                 .map(key => selected[key] ? key : null)
                                 .filter(key => key !== null)
 
-    const handleCampaignChange = (e) => {
-        setSelectedCampaign(e.target.value)
+    const handleCampaignChange = (e, value) => {
+        setSelectedCampaign(value)
     }
 
     const handleSubmit = async () => {
+        if (!selectedCampaign) return;
         try {
             const resp = await axios.post(
-                `/api/campaigns/${selectedCampaign}/prospects`, 
+                `/api/campaigns/${selectedCampaign.id}/prospects`, 
                 { prospect_ids: selectedProspects }
             );
             if (resp.data.error) throw new Error(resp.data.error);
-            console.log(resp.data);
         } catch (error) {
             console.error(error);
         } finally {
@@ -48,9 +48,6 @@ const AddProspectsDialog = ({
                     );
                     if (resp.data.error) throw new Error(resp.data.error);
                     setCampaigns(resp.data.campaigns);
-                    if (resp.data.campaigns.length > 0){
-                        setSelectedCampaign(resp.data.campaigns[0].id)
-                    }
                 } catch (error) {
                     console.error(error);
                 } finally {

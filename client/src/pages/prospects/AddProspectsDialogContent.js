@@ -1,10 +1,8 @@
 import React from 'react';
 import DialogContent from '@material-ui/core/DialogContent';
-import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import { Grid, CircularProgress } from "@material-ui/core";
 
 
@@ -16,30 +14,24 @@ const AddPropsectsDialogContent = ({
     handleSubmit
 }) => {
 
-  return (
-    <DialogContent>
-        {isDataLoading ? (
-            <Grid container justifyContent="center">
-                <CircularProgress />
-            </Grid>
-        ) : (
-            <FormControl>
-                <InputLabel>Select a Campaign</InputLabel>
-                <Select
-                    label="campaign"
+    return (
+        <DialogContent>
+            {isDataLoading ? (
+                <Grid container justifyContent="center">
+                    <CircularProgress />
+                </Grid>
+            ) : (
+                <Autocomplete
+                    id="campaign-select"
+                    options={campaigns}
                     value={selectedCampaign}
-                    onChange={handleCampaignChange}  
-                    variant="outlined"
-                    color="primary"  
-                >
-                    {campaigns.map(campaign => (
-                        <MenuItem value={campaign.id} key={campaign.id}>{campaign.name}</MenuItem>
-                    ))}
-                </Select>
-                <Button variant="outlined" color="primary" onClick={handleSubmit}>Confirm</Button>
-            </FormControl>
-        )}
-    </DialogContent>
+                    onChange={(e, newValue) => handleCampaignChange(e, newValue)}
+                    getOptionLabel={(option) => option.name}
+                    renderInput={(params) => <TextField {...params} label="Select a Campaign" variant="outlined" color="primary"/>}
+                />
+            )}
+            <Button variant="outlined" color="primary" onClick={handleSubmit}>Confirm</Button>
+        </DialogContent>
     );
 };
 
