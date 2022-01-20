@@ -11,8 +11,8 @@ const Prospects = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(DEFAULT_NUM_ROWS_PER_PAGE);
   const [count, setCount] = useState(0);
-  const [selected, setSelected] = useState({}); // object or array?
-
+  const [selected, setSelected] = useState({});
+  const [numSelected, setNumSelected] = useState(0);
 
   const handleChangeRowsPerPage = (event, _) => {
     setRowsPerPage(event.target.value);
@@ -23,8 +23,14 @@ const Prospects = () => {
     setCurrentPage(index);
   };
 
+  const updateNumSelected = (newSelected) => {
+    setNumSelected(Object.values(newSelected).reduce(((sum, isSelected) => isSelected ? sum + 1 : sum), 0));
+  }
+
   const handleCheckboxClick = (e, id) => {
-    setSelected(oldSelected => ({...oldSelected, [id]: !oldSelected[id]}));
+    let newSelected = {...selected, [id]: !selected[id]};
+    setSelected(newSelected);
+    updateNumSelected(newSelected);
   }
 
   const handleSelectAll = (e) => {
@@ -33,6 +39,7 @@ const Prospects = () => {
       newSelected[row.id] = e.target.checked;
     })
     setSelected(newSelected);
+    updateNumSelected(newSelected);
   }
 
   // TODO: set up handler for "add to campaign" click 
@@ -70,6 +77,7 @@ const Prospects = () => {
             handleChangePage={handleChangePage}
             handleChangeRowsPerPage={handleChangeRowsPerPage}
             selected={selected}
+            numSelected={numSelected}
             handleCheckboxClick={handleCheckboxClick}
             handleSelectAll={handleSelectAll}
           />

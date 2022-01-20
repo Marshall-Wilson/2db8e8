@@ -83,6 +83,7 @@ export default function CustomPaginatedTable({
   rowData,
   handleChangePage,
   handleChangeRowsPerPage,
+  checkboxInfo
 }) {
   const { tableContainer, tableHead, flexRootEnd } = useTableStyles();
 
@@ -109,6 +110,7 @@ export default function CustomPaginatedTable({
   return (
     <React.Fragment>
       <div className={flexRootEnd}> 
+        {checkboxInfo}
         <TablePagination
           rowsPerPageOptions={NUM_ROWS_PER_PAGE_CHOICES}
           colSpan={3}
