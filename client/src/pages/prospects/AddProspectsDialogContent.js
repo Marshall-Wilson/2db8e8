@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { Grid, CircularProgress } from "@material-ui/core";
-
+import { useDialogStyles } from '../../styles/dialog.js'
 
 const AddPropsectsDialogContent = ({
     isDataLoading,
@@ -14,8 +14,10 @@ const AddPropsectsDialogContent = ({
     handleSubmit
 }) => {
 
+    const { DialogContentRoot, DialogContentSubmit } = useDialogStyles();
+
     return (
-        <DialogContent>
+        <DialogContent className={DialogContentRoot}>
             {isDataLoading ? (
                 <Grid container justifyContent="center">
                     <CircularProgress />
@@ -30,7 +32,14 @@ const AddPropsectsDialogContent = ({
                     renderInput={(params) => <TextField {...params} label="Select a Campaign" variant="outlined" color="primary"/>}
                 />
             )}
-            <Button variant="outlined" color="primary" onClick={handleSubmit}>Confirm</Button>
+            <Button 
+                className={DialogContentSubmit}
+                variant="outlined" 
+                color="primary" 
+                onClick={handleSubmit}
+            >
+                Confirm
+            </Button>
         </DialogContent>
     );
 };
