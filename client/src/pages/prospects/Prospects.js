@@ -30,13 +30,13 @@ const Prospects = () => {
     }
 
     const handleCheckboxClick = (e, id) => {
-        let newSelected = {...selected, [id]: !selected[id] };
+        const newSelected = {...selected, [id]: !selected[id] };
         setSelected(newSelected);
         updateNumSelected(newSelected);
     }
 
     const handleSelectAll = (e) => {
-        let newSelected = {...selected };
+        const newSelected = {...selected };
         prospectsData.forEach(row => {
             newSelected[row.id] = e.target.checked;
         })
@@ -50,6 +50,10 @@ const Prospects = () => {
 
     const handleDialogClose = () => {
         setDialogOpen(false);
+    }
+
+    const resetSelected = () => {
+        setSelected({});
     }
 
     useEffect(() => {
@@ -72,31 +76,31 @@ const Prospects = () => {
         fetchProspects();
     }, [rowsPerPage, currentPage]);
 
-    return ( <
-        >
-        <
-        Drawer RightDrawerComponent = { <
-            ProspectsContent
-            isDataLoading = { isDataLoading }
-            paginatedData = { prospectsData }
-            count = { count }
-            page = { currentPage }
-            rowsPerPage = { rowsPerPage }
-            handleChangePage = { handleChangePage }
-            handleChangeRowsPerPage = { handleChangeRowsPerPage }
-            selected = { selected }
-            numSelected = { numSelected }
-            handleCheckboxClick = { handleCheckboxClick }
-            handleSelectAll = { handleSelectAll }
-            handleOpenDialog = { handleDialogOpen }
-            />
-        }
-        /> <
-        AddProspectsDialog open = { dialogOpen }
-        onClose = { handleDialogClose }
-        selected = { selected }
-        /> <
-        />
+    return ( 
+        <>
+            <Drawer RightDrawerComponent = { 
+                <ProspectsContent
+                    isDataLoading = { isDataLoading }
+                    paginatedData = { prospectsData }
+                    count = { count }
+                    page = { currentPage }
+                    rowsPerPage = { rowsPerPage }
+                    handleChangePage = { handleChangePage }
+                    handleChangeRowsPerPage = { handleChangeRowsPerPage }
+                    selected = { selected }
+                    numSelected = { numSelected }
+                    handleCheckboxClick = { handleCheckboxClick }
+                    handleSelectAll = { handleSelectAll }
+                    handleOpenDialog = { handleDialogOpen }
+                />}
+            /> 
+            <AddProspectsDialog 
+                open = { dialogOpen }
+                onClose = { handleDialogClose }
+                selected = { selected }
+                resetSelected = { resetSelected }
+            /> 
+        </>
     );
 };
 

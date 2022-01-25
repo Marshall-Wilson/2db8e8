@@ -45,7 +45,13 @@ const Content = ({
   const checkboxInfo = (
     <div className={checkboxInfoRoot}>
       <p>{numSelected} of {count} selected</p>
-      <Button variant="outlined" onClick={handleOpenDialog}>Add to Campaign</Button> {/* TODO: Add functionality for button */}
+      <Button 
+        variant="outlined" 
+        onClick={handleOpenDialog} 
+        disabled={numSelected === 0}
+      >
+        Add to Campaign
+      </Button> 
     </div>
   )
 

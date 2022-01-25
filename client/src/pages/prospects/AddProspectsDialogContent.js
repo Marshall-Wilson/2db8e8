@@ -14,10 +14,10 @@ const AddPropsectsDialogContent = ({
     handleSubmit
 }) => {
 
-    const { DialogContentRoot, DialogContentSubmit } = useDialogStyles();
+    const { dialogContentRoot, dialogContentSubmit } = useDialogStyles();
 
     return (
-        <DialogContent className={DialogContentRoot}>
+        <DialogContent className={dialogContentRoot}>
             {isDataLoading ? (
                 <Grid container justifyContent="center">
                     <CircularProgress />
@@ -33,10 +33,11 @@ const AddPropsectsDialogContent = ({
                 />
             )}
             <Button 
-                className={DialogContentSubmit}
+                className={dialogContentSubmit}
                 variant="outlined" 
                 color="primary" 
                 onClick={handleSubmit}
+                disabled={selectedCampaign === null}
             >
                 Confirm
             </Button>

@@ -4,11 +4,13 @@ import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle';
 import AddProspectsDialogContent from './AddProspectsDialogContent.js'
 
+const NUM_CAMPAIGNS_LOADED = 100;
 
 const AddProspectsDialog = ({
     onClose,
     open,
-    selected
+    selected,
+    resetSelected
 }) => {
     const [campaigns, setCampaigns] = useState([]);
     const [selectedCampaign, setSelectedCampaign] = useState(null);
@@ -33,6 +35,7 @@ const AddProspectsDialog = ({
         } catch (error) {
             console.error(error);
         } finally {
+            resetSelected();
             onClose();
         }
     }
@@ -43,9 +46,7 @@ const AddProspectsDialog = ({
             const fetchCampaigns = async () => {
                 setIsDataLoading(true);
                 try {
-                    const resp = await axios.get(
-                    `/api/campaigns?page=0&page_size=100`,
-                    );
+                    const resp = await axios.get(`/api/campaigns?page=0&page_size=${NUM_CAMPAIGNS_LOADED}`);
                     if (resp.data.error) throw new Error(resp.data.error);
                     setCampaigns(resp.data.campaigns);
                 } catch (error) {

@@ -1,13 +1,13 @@
 import { makeStyles } from "@material-ui/core";
 
 export const useDialogStyles = makeStyles((theme) => ({
-    DialogContentRoot: {
+    dialogContentRoot: {
         margin: "0 10%",
         display: "flex",
         justifyContent: "center",
         flexDirection: "column"
     },
-    DialogContentSubmit: {
+    dialogContentSubmit: {
         margin: "30px auto"
     }
 }));
