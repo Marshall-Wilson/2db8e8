@@ -1,31 +1,18 @@
 class Api::ProspectsFilesController < ApplicationController
-  require 'csv'
   def import
     if prospect_file_params[:file].blank? || prospect_file_params[:email_index].blank?
       render status: 400, json: {message: "File or email index missing."}
       return
     end
 
-    new_prospects = []
-    total = 0
-    CSV.foreach(prospect_file_params[:file], headers: (prospect_file_params[:has_headers?]) == "true") do |row|
-      new_prospects << {
-        email: row[prospect_file_params[:email_index].to_i],
-        first_name: prospect_file_params[:first_name_index?].blank? ? nil : row[prospect_file_params[:first_name_index?].to_i],
-        last_name: prospect_file_params[:last_name_index?].blank? ? nil : row[prospect_file_params[:last_name_index?].to_i],
-        user_id: @user.id
-      }
-      total += 1
-    end
-
-    done = Prospect.bulk_import new_prospects, (prospect_file_params[:force?] == "true")
-
-    render json: ProspectsFile.create({
-      file: prospect_file_params[:file],
-      total: total, 
-      done: done,
+    new_prospect_file = ProspectsFile.create({
+      **prospect_file_params,
       user_id: @user.id
     })
+
+    BulkProspectUploadJob.perform_later(new_prospect_file, prospect_file_params[:file].path)
+
+    render json: new_prospect_file
   end
 
   def progress
