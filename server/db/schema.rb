@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(version: 2022_01_22_032039) do
     t.integer "last_name_index?"
     t.boolean "has_headers?"
     t.boolean "force?"
+    t.boolean "processed?"
     t.integer "total"
     t.integer "done"
     t.datetime "created_at", precision: 6, null: false

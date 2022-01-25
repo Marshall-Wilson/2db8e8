@@ -7,11 +7,11 @@ class Api::ProspectsFilesController < ApplicationController
 
     new_prospect_file = ProspectsFile.create({
       **prospect_file_params,
+      processed?: false,
       user_id: @user.id
     })
 
     BulkProspectUploadJob.perform_later(new_prospect_file, prospect_file_params[:file].path)
-
     render json: new_prospect_file
   end
 
@@ -19,6 +19,8 @@ class Api::ProspectsFilesController < ApplicationController
     prospect_file = ProspectsFile.find(params[:id])
     puts prospect_file.inspect
     render json: {
+      file_name: prospect_file.file.filename,
+      processed?: prospect_file.processed?,
       total: prospect_file.total,
       done: prospect_file.done
     }

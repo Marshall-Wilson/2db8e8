@@ -1,4 +1,5 @@
 class BulkProspectUploadJob < ApplicationJob
+  require 'csv'
   queue_as :default
 
   def perform(prospect_file_entry, file_path)
@@ -16,6 +17,6 @@ class BulkProspectUploadJob < ApplicationJob
     end
     
     done = Prospect.bulk_import new_prospects, (prospect_file_entry[:force?] == "true")
-    prospect_file_entry.update(total: total, done: done)
+    prospect_file_entry.update(total: total, done: done, processed?: true)
   end
 end
