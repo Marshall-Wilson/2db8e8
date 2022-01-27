@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_25_221650) do
+ActiveRecord::Schema.define(version: 2022_01_27_185654) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,11 +77,17 @@ ActiveRecord::Schema.define(version: 2022_01_25_221650) do
     t.boolean "force?"
     t.boolean "processed?"
     t.integer "total"
-    t.integer "done"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id", null: false
     t.index ["user_id"], name: "index_prospects_files_on_user_id"
+  end
+
+  create_table "prospects_prospects_files", id: false, force: :cascade do |t|
+    t.bigint "prospects_file_id", null: false
+    t.bigint "prospect_id", null: false
+    t.index ["prospect_id", "prospects_file_id"], name: "prospect_id"
+    t.index ["prospects_file_id", "prospect_id"], name: "prospects_file_id"
   end
 
   create_table "users", force: :cascade do |t|

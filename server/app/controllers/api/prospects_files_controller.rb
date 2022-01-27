@@ -1,4 +1,6 @@
 class Api::ProspectsFilesController < ApplicationController
+  require 'csv'
+
   def import
     if prospect_file_params[:file].blank? || prospect_file_params[:email_index].blank?
       render status: 400, json: {message: "File or email index missing."}
@@ -8,6 +10,7 @@ class Api::ProspectsFilesController < ApplicationController
     new_prospect_file = ProspectsFile.create({
       **prospect_file_params,
       processed?: false,
+      total: CSV.read(prospect_file_params[:file], {headers: prospect_file_params[:has_headers?] == "true"}).length,
       user_id: @user.id
     })
 
@@ -17,12 +20,11 @@ class Api::ProspectsFilesController < ApplicationController
 
   def progress
     prospect_file = ProspectsFile.find(params[:id])
-    puts prospect_file.inspect
     render json: {
       file_name: prospect_file.file.filename,
       processed?: prospect_file.processed?,
       total: prospect_file.total,
-      done: prospect_file.done
+      done:  prospect_file.prospects.count
     }
   end
 

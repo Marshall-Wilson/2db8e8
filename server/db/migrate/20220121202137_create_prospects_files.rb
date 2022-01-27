@@ -8,7 +8,6 @@ class CreateProspectsFiles < ActiveRecord::Migration[6.1]
       t.boolean :force?
       t.boolean :processed?
       t.integer :total
-      t.integer :done
 
       t.timestamps
     end
