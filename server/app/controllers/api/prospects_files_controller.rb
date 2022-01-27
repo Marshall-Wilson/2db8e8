@@ -1,6 +1,8 @@
 class Api::ProspectsFilesController < ApplicationController
   require 'csv'
 
+  before_action :authorized, only: @user
+
   def import
     if prospect_file_params[:file].blank? || prospect_file_params[:email_index].blank?
       render status: 400, json: {message: "File or email index missing."}
