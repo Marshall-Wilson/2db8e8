@@ -5,8 +5,7 @@ class Api::ProspectsFilesController < ApplicationController
 
   def import
     if prospect_file_params[:file].blank? || prospect_file_params[:email_index].blank?
-      render status: 400, json: {message: "File or email index missing."}
-      return
+      return render status: 400, json: {message: "File or email index missing."}
     end
 
     new_prospect_file = ProspectsFile.create({
@@ -22,6 +21,11 @@ class Api::ProspectsFilesController < ApplicationController
 
   def progress
     prospect_file = ProspectsFile.find(params[:id])
+    
+    if prospect_file.user_id != @user.id
+      return render status: 403, json: {message: "The prospect file does not belong to this user."}
+    end
+
     render json: {
       file_name: prospect_file.file.filename,
       processed?: prospect_file.processed?,
